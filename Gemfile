@@ -5,7 +5,7 @@ source "https://rubygems.org"
 gem "rails", "~> 4.2.8"
 
 # Database interfaces
-# gem "sqlite3"
+gem "sqlite3" # test db
 gem "pg", "~> 0.18.2"
 
 # For migrating from mysql to postgresql
