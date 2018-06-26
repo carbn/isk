@@ -58,7 +58,7 @@ To install rvm and the ruby version used by ISK:
 
 ### Clone isk git repository
 
-Use "git clone https://github.com/depili/isk isk" to clone the repository. With rvm installed and changing to the isk repository directory with "cd" rvm will automatically select the correct ruby and gemset.
+Use "git clone https://gitlab.com/iskcrew/isk.git isk" to clone the repository. With rvm installed and changing to the isk repository directory with "cd" rvm will automatically select the correct ruby and gemset.
 
 ### Install the rubygems needed for isk
 
@@ -68,12 +68,7 @@ ISK manages its rubygem dependencies with bundler. This makes installing the cor
 
 You need to copy the config/database.yml.example file to config/database.yml and edit it for your database configuration. You also need to create the database in your postgresql server.
 
-After the database exists and the database.yml file points to it you can run:
-
-1. rake db:schema:load
-2. rake db:seed
-
-This will initialize the database.
+After the database exists and the database.yml file points to it you can initialize it with "rake db:setup".
 
 ### Generate the session cookie secret tokens
 
@@ -144,7 +139,7 @@ We have now integrated the previously separate iskdpy repository. This means tha
 
 # Raspberry pi displays
 
-It is possible to use a special browser in a raspberry pi as a ISK display. The environment for this is located at https://github.com/iskcrew/buildroot-wpe
+It is possible to use a special browser in a raspberry pi as a ISK display. The environment for this is located at https://gitlab.com/iskcrew/buildroot-wpe
 
 Buildroot will yeild a minimal environment for the special browser that will run completely on ramdisk after the initial boot process and thus never writes to the sd card. This avoids potential card corruption on unexpected powerloss. The system also has a watchdog enabled to detect lockups and reboot, running out of memory also triggers a reboot.
 
