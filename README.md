@@ -1,5 +1,5 @@
 # ISK - A web controlled slideshow system
-[![pipeline status](https://gitlab.com/iskcrew/isk/badges/master/pipeline.svg)](https://gitlab.com/iskcrew/isk/commits/master)[![coverage report](https://gitlab.com/iskcrew/isk/badges/master/coverage.svg)](https://gitlab.com/iskcrew/isk/commits/master)
+[![pipeline status](https://gitlab.com/iskcrew/isk/badges/master/pipeline.svg)](https://gitlab.com/iskcrew/isk/commits/master)[![coverage report](https://gitlab.com/iskcrew/isk/badges/master/coverage.svg)](https://gitlab.com/iskcrew/isk/-/jobs/artifacts/master/file/coverage/index.html?job=test)
 
 System for centrally managing multiple screens running multiple presentation,
 possibly sharing slides / groups of slides. Has simple online-editor and a
