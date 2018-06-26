@@ -1,0 +1,12 @@
+before_script:
+  - ruby -v
+  - which ruby
+  - cp config/database.yml.gitlab config/database.yml
+  - gem install bundler --no-ri --no-rdoc
+  - bundle install --quiet
+  - RAILS_ENV=test bundle exec rake db:create db:migrate --quiet
+  - RAILS_ENV=test bundle exec rake db:test:prepare --quiet
+
+minitest:
+  script:
+    - RAILS_ENV=test bundle exec rake test
