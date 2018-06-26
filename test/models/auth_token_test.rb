@@ -2,8 +2,12 @@
 
 require "test_helper"
 
-class TokenTest < ActiveSupport::TestCase
+class AuthTokenTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
+
+  test "needs tests" do
+    skip "Token needs tests"
+  end
 end
