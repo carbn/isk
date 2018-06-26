@@ -6,6 +6,10 @@ require "redis_test_helpers"
 class MasterGroupTest < ActiveSupport::TestCase
   include RedisTestHelpers
 
+  def teardown
+    stop_subscriber
+  end
+
   test "Create new prize group" do
     skip("Needs a template in test assets to work")
 

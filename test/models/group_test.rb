@@ -6,6 +6,10 @@ require "redis_test_helpers"
 class GroupTest < ActiveSupport::TestCase
   include RedisTestHelpers
 
+  def teardown
+    stop_subscriber
+  end
+
   test "notifications on create" do
     p = presentations(:with_slides)
     mg = master_groups(:one_slide)

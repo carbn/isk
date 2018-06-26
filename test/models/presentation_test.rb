@@ -6,6 +6,10 @@ require "redis_test_helpers"
 class PresentationTest < ActiveSupport::TestCase
   include RedisTestHelpers
 
+  def teardown
+    stop_subscriber
+  end
+
   test "create presentation" do
     p = Presentation.new
     p.name = "Test presentation"

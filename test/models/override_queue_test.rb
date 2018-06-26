@@ -6,6 +6,10 @@ require "redis_test_helpers"
 class OverrideQueueTest < ActiveSupport::TestCase
   include RedisTestHelpers
 
+  def teardown
+    stop_subscriber
+  end
+
   test "notifications on override update" do
     oq = override_queues(:override_1)
     with_redis(oq.display.websocket_channel) do

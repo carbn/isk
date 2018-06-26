@@ -18,6 +18,7 @@ class SlideTest < ActiveSupport::TestCase
     Slide.all.each do |s|
       clear_slide_files(s)
     end
+    stop_subscriber
   end
 
   test "STI inheritance selectors" do

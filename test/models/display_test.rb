@@ -6,6 +6,10 @@ require "redis_test_helpers"
 class DisplayTest < ActiveSupport::TestCase
   include RedisTestHelpers
 
+  def teardown
+    stop_subscriber
+  end
+
   test "hello on existing display" do
     d = Display.hello "Normal", "127.0.0.1"
     assert_equal d.id, displays(:normal).id, "Got wrong display"

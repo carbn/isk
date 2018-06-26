@@ -31,6 +31,10 @@ class DisplaysControllerTest < ActionController::TestCase
     @all_displays = [:normal, :no_presentation, :late, :with_overrides, :manual_mode, :no_timestamps]
   end
 
+  def teardown
+    stop_subscriber
+  end
+
   test "get index" do
     get :index, nil, @adminsession
     assert_response :success
