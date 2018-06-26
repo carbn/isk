@@ -1,4 +1,7 @@
+image: "ruby:2.4"
+
 before_script:
+  - apt-get update -qq && apt-get install -y -qq redis-server memcached imagemagick libpq-dev inkscape rrdtool librrd4 librrd-dev git curl sqlite3 nodejs
   - ruby -v
   - which ruby
   - cp config/database.yml.gitlab config/database.yml
