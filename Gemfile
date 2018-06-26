@@ -5,8 +5,8 @@ source "https://rubygems.org"
 gem "rails", "~> 4.2.8"
 
 # Database interfaces
-gem "sqlite3" # test db
 gem "pg", "~> 0.18.2"
+gem "sqlite3" # test db
 
 # For migrating from mysql to postgresql
 # gem "yaml_db", github: "jetthoughts/yaml_db", ref: "fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba"
@@ -109,6 +109,7 @@ gem "rack-rewrite"
 gem "pry-rails"
 
 group :development do
+  gem "brakeman", require: false
   gem "rails-erd"
   gem "web-console"
 end
