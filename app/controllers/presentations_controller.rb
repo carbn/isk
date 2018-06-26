@@ -37,9 +37,7 @@ class PresentationsController < ApplicationController
   def create
     @presentation = Presentation.new(presentation_params)
     if @presentation.save
-      unless Presentation.admin?(current_user)
-        @presentation.authorized_users << current_user
-      end
+      @presentation.authorized_users << current_user unless Presentation.admin?(current_user)
       flash[:notice] = "Presentation was successfully created."
       redirect_to presentation_path(@presentation)
     else

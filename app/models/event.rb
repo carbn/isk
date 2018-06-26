@@ -134,9 +134,7 @@ class Event < ActiveRecord::Base
   # FIXME: True dynamic settings!
   def simple_editor_settings
     settings = config[:simple]
-    if picture_sizes[:full] == SupportedResolutions[1]
-      settings[:font_sizes] = [80, 90, 100, 120, 160, 200, 300, 400]
-    end
+    settings[:font_sizes] = [80, 90, 100, 120, 160, 200, 300, 400] if picture_sizes[:full] == SupportedResolutions[1]
     return settings
   end
 
@@ -201,8 +199,6 @@ private
 
   # Validation that prevents clearing the current event -bit
   def ensure_one_current_event
-    if !current && changed.include?("current")
-      errors.add(:current, "^Must have one current event")
-    end
+    errors.add(:current, "^Must have one current event") if !current && changed.include?("current")
   end
 end

@@ -11,7 +11,7 @@ module ApplicationHelper
   # for the tab of the current controller
   def navigation_links
     controllers = ["Slides", "Groups", "Presentations", "Displays", "Schedules", "Tickets"]
-    ret = String.new
+    ret = +""
     # Build navigation tabs for basic controllers
     tabs = controllers
     tabs.each do |c|

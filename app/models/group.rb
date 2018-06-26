@@ -58,9 +58,7 @@ private
 
   def update_timestamps
     touch_by_presentation(presentation_id)
-    if changed.include? "presentation_id"
-      touch_by_presentation(presentation_id_was)
-    end
+    touch_by_presentation(presentation_id_was) if changed.include? "presentation_id"
   end
 
   # We need to proganate timestamps down the presentation chain for

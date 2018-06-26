@@ -194,9 +194,7 @@ module SlidesHelper
   # Link to previous slide in the same group as this slide
   def slide_previous_in_group_link(slide)
     s = slide.master_group.slides.where("position < #{slide.position}").reorder(position: :desc).first
-    if s
-      link_to safe_join([icon("backward"), " Previous slide"]), slide_path(s), class: "btn btn-primary btn-xs"
-    end
+    link_to safe_join([icon("backward"), " Previous slide"]), slide_path(s), class: "btn btn-primary btn-xs" if s
   end
 
   # Turn the slide class into human readable slide type

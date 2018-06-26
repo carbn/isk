@@ -42,9 +42,7 @@ private
     end
 
     # Check that current user modify the ACL for this object
-    unless object.admin? current_user
-      raise ApplicationController::PermissionDenied
-    end
+    raise ApplicationController::PermissionDenied unless object.admin? current_user
 
     object
   end

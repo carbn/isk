@@ -37,9 +37,8 @@ class TicketsController < ApplicationController
       flash[:notice] = "Ticket created."
 
       # Allow the user creating the ticket edit priviledges if needed
-      unless @ticket.can_edit? current_user
-        @ticket.authorized_users << current_user
-      end
+      @ticket.authorized_users << current_user unless @ticket.can_edit? current_user
+
       redirect_to ticket_path(@ticket)
     else
       flash[:error] = "Error saving ticket."

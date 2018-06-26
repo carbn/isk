@@ -78,7 +78,7 @@ class SimpleSlide < SvgSlide
     header = text_nodes.first.text
     text_nodes.shift
 
-    text = String.new
+    text = +""
     text_nodes.each do |n|
       text << n.text
     end
@@ -289,8 +289,6 @@ private
   def check_color
     # Do not run this validation if slidedata hasn't been changed or loaded, as doing so will mark the slide as not ready
     return true if @_slidedata.nil?
-    unless Event.current.config[:simple][:colors].include? slidedata[:color]
-      errors.add :color, "is not whitelisted"
-    end
+    errors.add :color, "is not whitelisted" unless Event.current.config[:simple][:colors].include? slidedata[:color]
   end
 end

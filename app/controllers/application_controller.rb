@@ -70,10 +70,7 @@ private
   # if not redirect to the login page
   def require_login
     return if current_user
-
-    if request.get? && !request.xhr?
-      session["login_return_to"] = request.fullpath
-    end
+    session["login_return_to"] = request.fullpath if request.get? && !request.xhr?
     redirect_to login_path
   end
 

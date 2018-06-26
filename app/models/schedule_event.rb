@@ -18,12 +18,12 @@ class ScheduleEvent < ActiveRecord::Base
 
   before_validation do |event|
     if event.name.length > schedule.settings[:events][:line_length]
-      new_name = String.new
-      line = String.new
+      new_name = +""
+      line = +""
       event.name.split.each do |word|
         if line.length + word.length > schedule.settings[:events][:line_length]
           new_name << line << "\n"
-          line = String.new
+          line = +""
         end
         line << word + " "
       end

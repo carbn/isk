@@ -90,7 +90,7 @@ class Schedule < ActiveRecord::Base
       slide.generate_images_later
 
       current_slide += 1
-    end # slides.each
+    end
 
     slidegroup.publish_slides
 

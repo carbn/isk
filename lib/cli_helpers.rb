@@ -18,7 +18,6 @@ class WsMessage
     @_name = name
     @_data = data
     @_connection_id = con_id
-    return self
   end
 
   def name=(n)
@@ -45,7 +44,7 @@ end
 def isk_login(host, port, username, password)
   puts "Logging in to ISK at #{host}:#{port}...".green
 
-  base_url = String.new
+  base_url = +""
   # Send a POST request to ISK and collect cookies
   if port.to_i == 443
     base_url = "https://#{host}/"

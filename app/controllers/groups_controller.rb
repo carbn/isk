@@ -167,11 +167,8 @@ class GroupsController < ApplicationController
   def add_to_override
     group = MasterGroup.find(params[:id])
     display = Display.find(params[:override][:display_id])
+    raise ApplicationController::PermissionDenied unless display.can_override?(current_user)
     duration = params[:override][:duration].to_i
-
-    unless display.can_override?(current_user)
-      raise ApplicationController::PermissionDenied
-    end
 
     group.slides.each do |s|
       display.add_to_override(s, duration)

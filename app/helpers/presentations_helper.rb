@@ -27,8 +27,6 @@ module PresentationsHelper
 
   # Button to edit a presentation
   def presentation_edit_button(p)
-    if p.can_edit? current_user
-      return link_to edit_link_text, edit_presentation_path(p), class: "btn btn-primary"
-    end
+    return link_to edit_link_text, edit_presentation_path(p), class: "btn btn-primary" if p.can_edit? current_user
   end
 end

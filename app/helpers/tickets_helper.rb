@@ -70,9 +70,7 @@ module TicketsHelper
   end
 
   def ticket_edit_link(ticket, html_class = nil)
-    if ticket.can_edit? current_user
-      link_to edit_link_text, edit_ticket_path(ticket), class: html_class
-    end
+    link_to edit_link_text, edit_ticket_path(ticket), class: html_class if ticket.can_edit? current_user
   end
 
   def ticket_edit_button(ticket)

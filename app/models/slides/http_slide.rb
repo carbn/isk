@@ -53,20 +53,16 @@ private
     end
 
     request = Net::HTTP::Get.new(uri.request_uri)
-
-    unless slidedata[:user].blank?
-      request.basic_auth(slidedata[:user], slidedata[:password])
-    end
+    request.basic_auth(slidedata[:user], slidedata[:password]) unless slidedata[:user].blank?
 
     resp = http.request(request)
-
-    if resp.is_a? Net::HTTPOK
-      self.image = StringIO.new(resp.body)
-      self.ready = false
-      save!
-    else
+    unless resp.is_a? Net::HTTPOK
       raise Slide::ImageError, "Error fetching slide data, http request didn't return OK status. URI=#{uri}"
     end
+
+    self.image = StringIO.new(resp.body)
+    self.ready = false
+    save!
     super
   end
 

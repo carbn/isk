@@ -161,9 +161,7 @@ class DisplaysController < ApplicationController
     @display = Display.find(params[:id])
     require_edit @display
     oq = @display.queue.find(params[:element_id])
-    unless oq
-      render text: "Invalid request, try refreshing", status: :bad_request
-    end
+    render text: "Invalid request, try refreshing", status: :bad_request unless oq
 
     oq.position_position = params[:element_position]
     oq.save!
@@ -261,9 +259,8 @@ class DisplaysController < ApplicationController
             # Display has finished showing a slide
             # We only care about this if the slide was from the override queue
             raise PermissionDenied unless require_display_control(@display)
-            if msg.payload[:override_queue_id]
-              @display.override_shown(msg.payload[:override_queue_id])
-            end
+            @display.override_shown(msg.payload[:override_queue_id]) if msg.payload[:override_queue_id]
+
             msg.object = "display"
             msg.type = "slide_shown"
             msg.send @display.websocket_channel

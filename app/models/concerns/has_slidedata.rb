@@ -31,9 +31,7 @@ module HasSlidedata
   # Read and memoize the slidedata
   def slidedata
     return @_slidedata if @_slidedata.present?
-    if !new_record? && File.exist?(data_filename.to_s)
-      @_slidedata = YAML.load(File.read(data_filename))
-    end
+    @_slidedata = YAML.load(File.read(data_filename)) if !new_record? && File.exist?(data_filename.to_s)
     return @_slidedata.blank? ? default_slidedata : @_slidedata
   end
 

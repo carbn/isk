@@ -46,7 +46,6 @@ class User < ActiveRecord::Base
   def password=(str)
     self[:salt] = generate_salt unless self[:salt]
     self[:password] = Digest::SHA1.hexdigest(str << self[:salt])
-    return true
   end
 
   def password
@@ -59,7 +58,7 @@ class User < ActiveRecord::Base
 
   def self.authenticate(username, passwd)
     user = User.find_by(username: username)
-    return user if user && user.authenticate(passwd)
+    return user if user&.authenticate(passwd)
     return nil
   end
 
@@ -70,6 +69,6 @@ class User < ActiveRecord::Base
 private
 
   def generate_salt
-    (0...8).map { 65.+(rand(26)).chr }.join
+    (0...8).map { rand(65..90).chr }.join
   end
 end

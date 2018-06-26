@@ -106,10 +106,9 @@ class SlidesController < ApplicationController
         @slide.svg_data = SimpleSlide.create_svg(SimpleSlide::DefaultSlidedata)
       end
 
-      unless @slide.can_edit? current_user
-        @slide.authorized_users << current_user
-      end
-    end # Transaction
+      @slide.authorized_users << current_user unless @slide.can_edit? current_user
+      # End of transaction
+    end
 
     @slide.generate_images_later
 
@@ -240,9 +239,7 @@ class SlidesController < ApplicationController
     slide = Slide.current.find(params[:id])
     display = Display.find(params[:add_to_override][:display_id])
 
-    unless display.can_override? current_user
-      raise ApplicationController::PermissionDenied
-    end
+    raise ApplicationController::PermissionDenied unless display.can_override? current_user
 
     effect = Effect.find params[:add_to_override][:effect_id]
     display.add_to_override(slide,
@@ -263,9 +260,8 @@ class SlidesController < ApplicationController
   # We can even use params whitelisting to make this extra-easy!
   def hide
     @slide = Slide.find(params[:id])
-    unless @slide.can_hide? current_user
-      raise ApplicationController::PermissionDenied
-    end
+    raise ApplicationController::PermissionDenied unless @slide.can_hide? current_user
+
     @slide.public = false
     @slide.save!
 
@@ -325,12 +321,10 @@ class SlidesController < ApplicationController
   # Send the slide preview image, we set the cache headers
   # to avoid unecessary reloading
   def preview
-    slide = Slide.find(params[:id])
     redirect_to slide_image_path(params[:id], size: :preview)
   end
 
   def thumb
-    slide = Slide.find(params[:id])
     redirect_to slide_image_path(params[:id], size: :thumb)
   end
 
@@ -338,7 +332,6 @@ class SlidesController < ApplicationController
   # We will always send the last rendered image if it exists
   # If not we will issue 404 status
   def full
-    slide = Slide.find(params[:id])
     redirect_to slide_image_path(params[:id])
   end
 

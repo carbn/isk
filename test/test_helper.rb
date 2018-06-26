@@ -29,10 +29,7 @@ class ActiveSupport::TestCase
     images << slide.full_filename.to_s
     images << slide.preview_filename.to_s
     images << slide.thumb_filename.to_s
-
-    if slide.is_a?(ImageSlide) || slide.is_a?(HttpSlide)
-      images << slide.original_filename.to_s
-    end
+    images << slide.original_filename.to_s if slide.is_a?(ImageSlide) || slide.is_a?(HttpSlide)
 
     images.each do |i|
       FileUtils.cp imagefile, i
@@ -87,9 +84,7 @@ class ActiveSupport::TestCase
     actions.each_key do |verb|
       tested = tested_actions[verb].collect(&:first)
       actions[verb].each do |a|
-        unless tested.include?(a.to_sym) || (allowed[verb] && allowed[verb].include?(a.to_sym))
-          missed << "#{verb.upcase} :#{a}"
-        end
+        missed << "#{verb.upcase} :#{a}" unless tested.include?(a.to_sym) || (allowed[verb]&.include?(a.to_sym))
       end
     end
 
