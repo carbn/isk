@@ -13,7 +13,7 @@ Versions listed are known good ones, other versions are probably fine.
  * memcached (>= 1.4.5)
  * redis (>= 2.6.10)
  * inkscape (0.48.5-3 from jessie DOES NOT WORK)
- * postgresql (>=9.1)
+ * postgresql (>=9.1 && <10, versions 10+ won't work with rails4)
  * rrdtool (>=1.4.7) for statistic collection and graph generation
  * nodejs for javascript runtime for asset creation
 
@@ -43,7 +43,7 @@ To get the dev environment running you need to do the following:
 6. curl
 7. nodejs
 
-The command "apt-get install redis-server memcached imagemagick postgresql postgresql-client libpq-dev inkscape rrdtool librrd4 librrd-dev git curl" should install all of the above in a debian based linux distribution.
+The command "apt-get install redis-server memcached imagemagick postgresql postgresql-client libpq-dev inkscape rrdtool librrd-dev git curl nodejs" should install all of the above in a debian based linux distribution.
 
 ### Rvm and rubies
 
