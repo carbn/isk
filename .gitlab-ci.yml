@@ -19,3 +19,6 @@ test:
     - RAILS_ENV=test bundle exec rake isk:secrets --quiet
     - RAILS_ENV=test bundle exec rake db:test:prepare --quiet
     - RAILS_ENV=test bundle exec rake test
+  artifacts:
+    paths:
+      - coverage/
