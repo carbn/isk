@@ -26,7 +26,6 @@ class HttpSlide < ImageSlide
 
   after_create do |s|
     s.send(:write_slidedata)
-    s.fetch_later
   end
 
   validate :validate_url
