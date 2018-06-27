@@ -70,7 +70,7 @@ module TestTubesock
       @message_handlers.each do |h|
         begin
           h.call(@message)
-        rescue => e
+        rescue StandardError => e
           raise unless @test_error_handlers
           @error_handlers.each { |eh| eh.call(e, msg) }
         end
@@ -110,9 +110,7 @@ module TestTubesock
   # Methods for easier testing
   module TestHelpers
     def tube(action, params, session, message, test_error_handlers = false)
-      unless @controller.respond_to? :tubesock_output
-        @controller.extend(TestTubesock::ControllerExtensions)
-      end
+      @controller.extend(TestTubesock::ControllerExtensions) unless @controller.respond_to? :tubesock_output
       @controller.tubesock_message = message
       @controller.tubesock_test_error_handlers = test_error_handlers
       get action, params, session

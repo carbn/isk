@@ -29,10 +29,9 @@ MemcachedOptions = { namespace: "ISK", compress: true }.freeze
 # Check that all the needed external binaries are present
 def check_deps
   puts "Checking that needed external dependencies are met..."
-  unless find_executable "inkscape"
-    abort "ERROR: ISK needs inkscape to function".red
-  end
-  # Get the inkscape version, as the new 0.91 release still has some kinks with bitmaps
+
+  abort "ERROR: ISK needs inkscape to function".red unless find_executable "inkscape"
+  # Get the inkscape version, as some releases are simply unusable...
   inkscape_version = `inkscape --version`.split[1]
   if inkscape_version == "0.48.5"
     abort "ERROR: Inkscape version 0.48.5 (in debian Jessie) has non-sane text element postioning, use 0.91 from jessie-backports instead".red

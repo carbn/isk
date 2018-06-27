@@ -97,9 +97,7 @@ EM.run do
     else
       say "Got unhandled message: "
       say event.data
-      if msg_channel
-        say " -> Channel: #{msg_channel} message: #{msg_name} hash: #{msg_hash}"
-      end
+      say " -> Channel: #{msg_channel} message: #{msg_name} hash: #{msg_hash}" if msg_channel
     end
   end
 

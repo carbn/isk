@@ -40,7 +40,9 @@ class TubesockController < ApplicationController
                                               .generate_svg(data))
             tubesock.send_data msg.encode
           end
-        rescue
+        rescue StandardError
+          # We need to handle all problems with the websocket connection ourselves or the whole
+          # app will terminate on exception.
           Rails.logger.error "Error handling websocket message #{m}"
           redis_thread.kill
           tubesock.close
