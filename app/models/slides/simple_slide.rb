@@ -210,6 +210,7 @@ private
       else
         size = element["font-size"]
       end
+      row_y = element["y"].to_f
 
       first_line = true
 
@@ -224,7 +225,7 @@ private
         if first_line
           first_line = false
         else
-          row["dy"] = "1em"
+          row["y"] = row_y
         end
         if l.strip.empty?
           row["font-size"] = (size.to_i * 0.4).to_i
@@ -242,6 +243,7 @@ private
           row.add_child ts
         end
         element.add_child row
+        row_y += size.to_f
       end
 
       return set_text_anchor(element, align)
