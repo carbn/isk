@@ -295,7 +295,7 @@ class DisplaysController < ApplicationController
         if e.is_a? PermissionDenied
           tubesock.send_data ["error", "forbidden", {}].to_json
         else
-          Rails.logger.error "Error handling websocket message #{data}"
+          Rails.logger.error "Error handling websocket message #{data}\n\tException: #{e.inspect}\n\tBacktrace:\n\t\t#{e.backtrace.join("\n\t\t")}"
         end
         redis_thread.kill
         tubesock.close
