@@ -68,6 +68,7 @@ class Isk::Application < Rails::Application
   config.active_record.raise_in_transactional_callbacks = true
 
   # Log display websocket actions on log/displays.log
+  require "add_exception_object_to_instrumentation_payload" # This is a backported rails 5 feature
   require "display_logging"
 
   # Class for the websocket messages

@@ -47,6 +47,7 @@ class DisplayLogging
     if payload[:exception].present?
       log_msg << "EXCEPTION: #{payload[:exception].first}"
       log_msg << payload[:exception].last
+      log_msg += payload[:exception_object].backtrace
       logger.error log_msg.join("\n\t")
     else
       logger.info log_msg.join("\n\t")
