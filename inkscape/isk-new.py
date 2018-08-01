@@ -8,7 +8,7 @@
 # This is an Python rewrite of isk-new.rb
 #
 # Author::    Jarkko Räsänen
-# Copyright:: Copyright (c) 2015 Jarkko Räsänen
+# Copyright:: Copyright (c) 2018 Jarkko Räsänen
 # License::   Licensed under GPL v3, see LICENSE.md
 
 import urllib
@@ -16,6 +16,7 @@ import urllib2
 import cookielib
 import sys
 import json
+import ssl
 from xml.dom import minidom
 from sys import argv
 
@@ -32,22 +33,22 @@ while 1:
 	if argv[value].split("=")[0] == "--username":
 		username = argv[value].split("=")[1]
 		value = value+1
-	
+
 	elif argv[value].split("=")[0] == "--password":
 		password = argv[value].split("=")[1]
 		value = value+1
-		
+
 	elif argv[value].split("=")[0] == "--slidename":
 		slidename = argv[value].split("=")[1]
 		value = value+1
-	
+
 	elif argv[value].split("=")[0] == "--iskhost":
 		hostname = argv[value].split("=")[1]
 		value = value+1
-		
+
 	elif argv[value].split("=")[0] == "--id":
 		value = value+1
-		
+
 	elif ".svg" in argv[value]:
 		svg_file = argv[value]
 		value = value+1
@@ -79,8 +80,9 @@ except:
 #print hostname
 #print svg_file
 
+gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 cookiejar = cookielib.CookieJar()
-opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookiejar))
+opener = urllib2.build_opener(urllib2.HTTPSHandler(context=gcontext),urllib2.HTTPCookieProcessor(cookiejar))
 
 # Login info
 payload = {
@@ -93,11 +95,13 @@ data = urllib.urlencode(payload)
 req = urllib2.Request(hostname+"/login", data)
 
 # For login purpose, CookieProcessor saves the cookie to the opener after this.
-try:
-	resp = opener.open(req)
-except:
-	print "Error while logging into ISK, aborting"
-	raise SystemExit
+#try:
+
+resp = opener.open(req)
+
+#except:
+#	print "Error while logging into ISK, aborting"
+#	raise SystemExit
 
 # Build the data for the POST request to create a new slide
 payload = {
