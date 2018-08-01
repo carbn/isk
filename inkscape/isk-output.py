@@ -16,7 +16,6 @@ import urllib
 import urllib2
 import cookielib
 import sys
-import ssl
 from xml.dom import minidom
 from sys import argv
 
@@ -74,9 +73,8 @@ except:
 	#print "Missing mandatory arguments!"
 	raise SystemExit
 
-gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 cookiejar = cookielib.CookieJar()
-opener = urllib2.build_opener(urllib2.HTTPSHandler(context=gcontext),urllib2.HTTPCookieProcessor(cookiejar))
+opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookiejar))
 
 # Login info
 payload = {
