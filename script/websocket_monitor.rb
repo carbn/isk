@@ -11,12 +11,13 @@
 # ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
 # require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 
+# require File.expand_path(File.join(File.dirname(__FILE__), "..", "config", "environment"))
 require "highline/import"
 require "colorize"
 require "faye/websocket"
 require "json"
-require "time_diff"
 require "rest-client"
+require "active_support/all"
 
 require_relative "../lib/isk_message.rb"
 require_relative "../lib/cli_helpers.rb"
