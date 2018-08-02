@@ -21,7 +21,7 @@ class DisplaysController < ApplicationController
   # We support html or json for the whole list and
   # js for updating the late display warnings on pages.
   def index
-    @displays = Display.order(:live, :name)
+    @displays = Display.order(live: :desc, name: :asc)
 
     respond_to do |format|
       format.js
