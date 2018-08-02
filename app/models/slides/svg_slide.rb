@@ -10,6 +10,8 @@ class SvgSlide < Slide
   TypeString = "svg-edit"
   @_svg_data = nil
 
+  include SvgManipulation
+
   before_create do |slide|
     slide.is_svg = true
     true

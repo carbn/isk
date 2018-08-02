@@ -26,6 +26,8 @@ class SlideTemplate < ActiveRecord::Base
 
   scope :current, (-> { where deleted: false })
 
+  include SvgManipulation
+
   # Load the svg in
   def template
     return @_template if @_template || new_record?
@@ -47,19 +49,6 @@ class SlideTemplate < ActiveRecord::Base
     self.template = upload.read
   end
 
-  # TODO: input validation
-  def generate_svg(data)
-    svg = REXML::Document.new(template)
-
-    fields.editable.each do |f|
-      svg.root.elements.each("//text[@id='#{f.element_id}']") do |e|
-        set_text(e, data[f.element_id.to_sym], f.color)
-      end
-    end
-
-    return svg.to_s
-  end
-
   # Filename to store the svg template file in
   def filename
     FilePath.join "slide_template_#{id}.svg"
@@ -69,6 +58,32 @@ class SlideTemplate < ActiveRecord::Base
   def destroy
     self.deleted = true
     save!
+  end
+
+  def generate_svg(data)
+    svg = Nokogiri::XML(template)
+
+    fields.editable.each do |f|
+      svg.css("text\##{f.element_id}").each do |e|
+        size = nil
+        if e.key? "font-size"
+          size = e["text-size"]
+        else
+          style = e["style"].split(";").collect { |l| l.split(":") }
+          style.each do |s|
+            if s.first == "font-size"
+              size = s.last.to_i
+              break
+            end
+          end
+        end
+        text_x = e["x"]
+        SlideTemplate.clear_childs(e)
+        SlideTemplate.set_text(e, data[f.element_id.to_sym], text_x, f.color, size)
+      end
+    end
+
+    return svg.to_xml
   end
 
 private
@@ -121,38 +136,6 @@ private
     return if new_record?
     File.open(filename, "wb") do |f|
       f.write @_template
-    end
-  end
-
-  def set_text(element, text, color)
-    # Clear tspans
-    element.elements.each do
-      element.delete_element("*")
-    end
-
-    element.text = ""
-
-    first_line = true
-
-    text.each_line do |l|
-      row = element.add_element "tspan"
-      row.attributes["x"] = element.attributes["x"]
-      row.attributes["sodipodi:role"] = "line"
-      row.attributes["xml:space"] = "preserve"
-
-      # First line requires little different attributes
-      if first_line
-        first_line = false
-      else
-        row.attributes["dy"] = "1em"
-      end
-
-      parts = l.split(/<([^>]*)>/)
-      parts.each_index do |i|
-        ts = row.add_element "tspan"
-        ts.attributes["fill"] = color if color && i.odd?
-        ts.text = parts[i]
-      end
     end
   end
 end
