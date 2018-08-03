@@ -11,7 +11,7 @@ h3 Image scaling options
 		dd
 			| Image will be scaled to fit the slide dimensions maintaining aspect ratio.
 		dt Down only
-		dd 
+		dd
 			| Image will be scaled only if its height or width exceed the slide dimensions.
 			|  Aspect ratio will be maintained. Images smaller than the slide will be centered and
 			|  displayed 1:1.
@@ -23,9 +23,9 @@ h3 Image scaling options
 		dd
 			| Image will be streched to the slide dimensions ignoring the aspect ratio.
 	= ff.select :scale, ImageSlide::ScalingOptions, selected: slidedata[:scale]
-	p 
+	p
 		| Background color. When the (scaled) slide image is smaller than the slide it will be centered on
 		   the slide and rest of the slide will be filled with solid color background.
 	= ff.color_field :background, value: slidedata[:background]
-p: b Choose the image to upload:
+p: b Choose the image to upload, width and height maximum #{ImageSlide::ImageDimensionLimit} pixels:
 = f.file_field :image

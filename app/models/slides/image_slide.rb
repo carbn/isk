@@ -22,6 +22,9 @@ class ImageSlide < Slide
   ).freeze
   include HasSlidedata
 
+  # Imagemagick size limit (default 16 kilopixels)
+  ImageDimensionLimit = 16_000
+
   after_save :save_image
   validate :check_image
   validate :check_bg_color
@@ -50,12 +53,19 @@ private
     return unless @_image_file
     # Verify image integrity
     command = "identify #{@_image_file.path} &> /dev/null"
-    return if system command
-
-    # Verify error
-    @_image_file.unlink
-    @_image_file = nil
-    errors.add :image, "wasn't a valid image file."
+    if system command
+      width, height = `identify -format '%[fx:w]x%[fx:h]' #{@_image_file.path}`.split("x")
+      return if width.to_i < ImageDimensionLimit && height.to_i < ImageDimensionLimit
+      # Image is too big
+      @_image_file.unlink
+      @_image_file = nil
+      errors.add :image, "is too large. Limit #{ImageDimensionLimit} pixels width/height."
+    else
+      # Verify error
+      @_image_file.unlink
+      @_image_file = nil
+      errors.add :image, "wasn't a valid image file."
+    end
   end
 
   # Validates that the background color is ok
