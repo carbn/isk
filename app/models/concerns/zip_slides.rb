@@ -19,7 +19,7 @@ module ZipSlides
       i = 0
       slides.each do |slide|
         i += 1
-        filename = "#{self.class.name.downcase}_#{name}_slide_%03d.png" % i
+        filename = "#{self.class.name.downcase}_#{name.gsub!(/[^0-9A-Za-z.\-]/, '_')}_slide_%03d.png" % i
         # Create a new entry with some arbitrary name
         zos.put_next_entry(filename)
         # Add the contents of the file, don't read the stuff linewise if its binary, instead use direct IO
