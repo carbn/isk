@@ -4,6 +4,11 @@ services:
   - redis:latest
   - postgres:9.6
 
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - vendor/ruby
+
 test:
   stage: test
   script:
@@ -13,8 +18,8 @@ test:
     - redis-cli -h redis PING
     - cp config/database.yml.gitlab config/database.yml
     - cp test/gitlab_redis.rb config/initializers/01_redis.rb
-    - gem install bundler --no-ri --no-rdoc
-    - bundle install --quiet
+    - gem install bundler
+    - bundle install -j $(nproc) --path vendor
     - RAILS_ENV=test bundle exec rake db:setup --quiet
     - RAILS_ENV=test bundle exec rake isk:secrets --quiet
     - RAILS_ENV=test bundle exec rake db:test:prepare --quiet
